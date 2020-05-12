@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <style type="text/css">
+         .dt{
+
+            text-align: center;
+         }
+         label{
+   color:blue;
+}
+      </style>
+      <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+      <title>Login and Registration Form with HTML5 and CSS3</title>
+   </head>
+   <body>
+      <div class="dt">
+      {% if messages %} 
+      {% for m in messages %}
+      <div class="alert alert-{{m.tags}}" style="margin-top:20px;">{{ m }}</div>
+      {% endfor %}
+      {% endif %}
+      <h1>Login and Registration Form</h1>
+      <div id="login">
+      <form action="{%url 'account'%}" autocomplete="on" method='post'>
+         {% csrf_token %}
+         <h1>Log in</h1>
+         <p> 
+            <label for="username" class="uname" > Your email or username </label>
+            <input id="username" name="username" required="required" type="text" placeholder="ur name"/>
+         </p>
+         <p> 
+            <label for="password" class="youpasswd" > Your password </label>
+            <input id="password" name="password" required="required" type="password" placeholder="org" /> 
+         </p>
+         <p class="login button"> 
+            <input type="submit" value="Login" /> 
+         </p>
+      </form>
+   </div>
+   </body>
+</html>
