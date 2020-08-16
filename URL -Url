@@ -1,0 +1,122 @@
+URL -Url
+from django.contrib import admin
+from django.urls import path
+from url import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('hi/',views.hi,name='hi',),
+    path('hello/',views.hello,name='hello',),
+    path('rollno/<int:id>',views.rollno,name='rollno'),
+    path('st/<str:ld>',views.st,name='st'),
+
+]
+
+views.py
+from django.shortcuts import render,redirect
+from django.http import HttpResponse
+def hi(request):
+	return HttpResponse("""<h2>Hello Swami</h2>""")
+def hello(request):
+	return HttpResponse("""<h2>Hello Swami we are in Hello Function</h2>""")
+def rollno(reg,id):
+	txt = '<h2>This is ur id {} </h2>'.format(id)
+	return HttpResponse(txt)
+def st(reg,ld):
+	txt = '<h2>This is ur id {} </h2>'.format(ld)
+	return HttpResponse(txt)
+
+
+Mess
+View py
+from django.shortcuts import render
+from django.contrib import messages
+def account(request):
+	if(request.method=='POST'):
+		first_name=request.POST['username']
+		pass_word=request.POST['password']
+		if(first_name=='swami' and pass_word=='apssdc'):
+			messages.info(request,"login successfully")
+			return render(request,"account.html",{})
+		else:
+			messages.error(request,"invalid credentials")
+			return render(request,"login.html",{})
+	return render(request,"login.html",{})
+
+
+def login(request):
+	return render(request,"login.html",{})
+
+	
+
+login.html
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <style type="text/css">
+         .dt{
+
+            text-align: center;
+         }
+         label{
+   color:blue;
+}
+      </style>
+      <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+      <title>Login and Registration Form with HTML5 and CSS3</title>
+   </head>
+   <body>
+      <div class="dt">
+      {% if messages %} 
+      {% for m in messages %}
+      <div class="alert alert-{{m.tags}}" style="margin-top:20px;">{{ m }}</div>
+      {% endfor %}
+      {% endif %}
+      <h1>Login and Registration Form</h1>
+      <div id="login">
+      <form action="{%url 'account'%}" autocomplete="on" method='post'>
+         {% csrf_token %}
+         <h1>Log in</h1>
+         <p> 
+            <label for="username" class="uname" > Your email or username </label>
+            <input id="username" name="username" required="required" type="text" placeholder="ur name"/>
+         </p>
+         <p> 
+            <label for="password" class="youpasswd" > Your password </label>
+            <input id="password" name="password" required="required" type="password" placeholder="org" /> 
+         </p>
+         <p class="login button"> 
+            <input type="submit" value="Login" /> 
+         </p>
+      </form>
+   </div>
+   </body>
+</html>
+
+account html
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+   <head>
+      <meta charset="UTF-8" />
+      <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+      <title>Login and Registration Form with HTML5 and CSS3</title>
+   </head>
+   <body>
+      {% if messages %} 
+      {% for m in messages %}
+      <div class="alert alert-{{m.tags}}" style="margin-top:20px;">{{ m }}</div>
+      {% endfor %}
+      {% endif %}
+      <h2 style="text-align: center; color: blue">Welcome to My Web Site</h2>
+   </body>
+</html>
+ url 
+ from django.urls import path,include
+from. import views
+urlpatterns = [
+    path('',views.login,name='login'),
+    path('account',views.account,name='account')
+]
